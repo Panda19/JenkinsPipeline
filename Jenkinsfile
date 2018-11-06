@@ -13,6 +13,8 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
+                input 'Does the staging environment look OK?'
+                milestone(1)
                 echo "Its Deploying the Code"
             }
         }
