@@ -4,19 +4,14 @@ pipeline {
         stage('Build') { 
             steps {
                 echo "Its Building the Code"
+                sh 'mvn clean package'
             }
-        }
-        stage('Test') { 
-            steps {
-                echo "Its Testing the Code"
+            post {
+                success {
+                    echo 'Now Archiving'
+                    archiveArtifacts artifacts: '**/target/*.war'
+                }
             }
-        }
-        stage('Deploy') { 
-            steps {
-                input 'Does the staging environment look OK?'
-                milestone(1)
-                echo "Its Deploying the Code"
-            }
-        }
+        }    
     }
 }
